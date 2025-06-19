@@ -134,20 +134,69 @@ class LinkedList {
 	string += `( ${current.value} ) -> null`;
 	return string;
   }
+
+  insertAt(value, index) {
+	const newNode = new Node(value);
+
+	if (index === 0 || this.head === null) {
+		this.prepend(value);
+		return;
+	}
+
+	let current = this.head;
+	let counter = 0;
+
+	while (current !== null) {
+		if (counter === index - 1) {
+			newNode.nextNode = current.nextNode;
+			current.nextNode = newNode;
+			return;
+		}
+		current = current.nextNode;
+		counter ++;
+	}
+
+	console.log("index to high, list not long enough");
+  }
+
+  removeAt(index) {
+	if (this.head === null) {
+		console.log("list is empty");
+		return;
+	}
+
+	if (index === 0) {
+		this.head = this.head.nextNode;
+	}
+
+	let counter = 0;
+	let current = this.head;
+
+	while (current.nextNode !== null) {
+		if (counter === index - 1) {
+			current.nextNode = current.nextNode.nextNode;
+			return;
+		}
+		current = current.nextNode;
+		counter ++;
+	}
+  }
 }
 
 const list = new LinkedList();
-list.append("A");
-list.append("B");
-list.prepend("Start");
 
-console.log(list.toString());      // ( Start ) -> ( A ) -> ( B ) -> null
-console.log(list.headFunc());      // Start
-console.log(list.tail());          // B
-console.log(list.size());          // 3
-console.log(list.contains("B"));   // true
-console.log(list.find("B"));       // 2
-list.pop();
-console.log(list.toString());      // ( Start ) -> ( A ) -> null
+list.append("dog");
+list.append("cat");
+list.append("parrot");
+list.append("hamster");
+list.append("snake");
+list.append("turtle");
+
+console.log(list.toString()); 
+
+list.insertAt("katze", 2);
+list.removeAt(4);
+
+console.log(list.toString()); 
 
 
